@@ -96,7 +96,7 @@ public class Sentinel {
                 e.printStackTrace();
             }
         }
-        System.out.println("--------------程序退出来--------------");
+        System.out.println("--------------程序已退出--------------");
     }
 
 }
