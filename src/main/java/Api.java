@@ -4,7 +4,6 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.ImmutableMap;
-import util.NoticeUtil;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
