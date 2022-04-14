@@ -25,13 +25,16 @@ public class Api {
     /**
      * 时间触发模式和哨兵模式播放音效提醒 请将电脑声音开到合适音量
      */
-    @SneakyThrows
     public static void play() {
         //这里还可以使用企业微信或者钉钉的提供的webhook  自己写代码 很简单 就是按对应数据格式发一个请求到企业微信或者钉钉
-        if (!NoticeUtil.send()) {
-            AudioClip audioClip = Applet.newAudioClip(new File("ding-dong.wav").toURL());
-            audioClip.loop();
-            Thread.sleep(60000);//响铃60秒
+        try {
+            if (!NoticeUtil.send()) {
+                AudioClip audioClip = Applet.newAudioClip(new File("ding-dong.wav").toURL());
+                audioClip.loop();
+                Thread.sleep(60000);//响铃60秒
+            }
+        } catch ( Exception e) {
+            e.printStackTrace();
         }
     }
 
