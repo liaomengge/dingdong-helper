@@ -26,6 +26,8 @@ public class Sentinel {
         //单轮轮询时请求异常（叮咚服务器高峰期限流策略）尝试次数
         int loopTryCount = 10;
 
+        int j = 0;
+
         boolean first = true;
         while (!Api.context.containsKey("end")) {
             try {
@@ -34,6 +36,8 @@ public class Sentinel {
                 } else {
                     sleep(RandomUtil.randomInt(sleepMillisMin, sleepMillisMax));
                 }
+                System.out.println("第["+(++j)+"]次抢购。。。");
+
                 Api.allCheck();
 
                 Map<String, Object> cartMap = null;
@@ -80,6 +84,7 @@ public class Sentinel {
                 e.printStackTrace();
             }
         }
+        System.out.println("--------------程序退出来--------------");
     }
 
 }
