@@ -1,6 +1,9 @@
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +13,7 @@ import java.util.Map;
 public class Application {
 
 
-    public static void sleep(int millis) {
+    public static void sleep(long millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException ignored) {
@@ -18,11 +21,23 @@ public class Application {
     }
 
     private static boolean timeTrigger(int hour, int minute, int second) {
-        sleep(1000);
         int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
         int currentSecond = Calendar.getInstance().get(Calendar.SECOND);
         System.out.println("时间触发 当前时间 " + currentHour + ":" + currentMinute + ":" + currentSecond + " 目标时间 " + hour + ":" + minute + ":" + second);
+        if (currentHour > hour) {
+            Date currentDate = new Date();
+            sleep(DateUtil.betweenMs(currentDate, DateUtil.endOfDay(currentDate).toJdkDate()));
+            return false;
+        }
+        if (currentHour < hour) {
+            sleep(60 * 1000);
+            return false;
+        }
+        if (currentMinute < minute) {
+            sleep(1000);
+            return false;
+        }
         return currentHour == hour && currentMinute == minute && currentSecond >= second;
     }
 
@@ -39,7 +54,7 @@ public class Application {
         //policy设置1 人工模式 运行程序则开始抢
         //policy设置2 时间触发 运行程序后等待早上5点59分30秒开始
         //policy设置3 时间触发 运行程序后等待早上8点29分30秒开始
-        int policy = 1;//默认人工模式
+        int policy = 2;//默认人工模式
 
         //最小订单成交金额 举例如果设置成50 那么订单要超过50才会下单
         double minOrderPrice = 0;
@@ -56,13 +71,14 @@ public class Application {
         //请求间隔时间最大值
         int sleepMillisMax = 500;
 
-
-        //5点59分30秒时间触发
-        while (policy == 2 && !timeTrigger(5, 59, 20)) {
+        //5点59分00秒时间触发
+        while (policy == 2 && !timeTrigger(5, 59, 00)) {
+            sleep(1000);
         }
 
-        //8点29分30秒时间触发
-        while (policy == 3 && !timeTrigger(8, 29, 30)) {
+        //8点29分00秒时间触发
+        while (policy == 3 && !timeTrigger(8, 29, 00)) {
+            sleep(1000);
         }
 
 
