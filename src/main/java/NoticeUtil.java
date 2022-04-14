@@ -11,6 +11,8 @@ public class NoticeUtil {
     private static final String url = String.format("http://dd.100vs.com/api/%s/send", token);
 
     public static void send() {
-        HttpUtil.get(url, ImmutableMap.of("title", "下单成功", "content", "下单成功，快去支付吧。。。"), 3000);
+        try {
+            HttpUtil.get(url, ImmutableMap.of("title", "下单成功", "content", "下单成功，快去支付吧。。。"), 3000);
+        } catch (Exception e) {}
     }
 }
