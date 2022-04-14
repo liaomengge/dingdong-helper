@@ -200,6 +200,7 @@ public class Api {
                 if (!noProductsContinue) {
                     context.put("end", new HashMap<>());
                 }
+                context.put("noProduct", new HashMap<>());
                 return null;
             }
             JSONObject newOrderProduct = data.getJSONArray("new_order_product_list").getJSONObject(0);
@@ -281,6 +282,7 @@ public class Api {
                 }
             }
             print(false, "无可选的配送时间");
+            context.put("noReserve", new HashMap<>());
             context.remove("multiReserveTimeMap");
         } catch (Exception e) {
             e.printStackTrace();
