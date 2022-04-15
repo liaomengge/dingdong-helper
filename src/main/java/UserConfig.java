@@ -1,4 +1,3 @@
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public class UserConfig {
     public static Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
         headers.put("ddmc-city-number", cityId);
-        headers.put("ddmc-time", String.valueOf(new Date().getTime() / 1000));
+        headers.put("ddmc-time", String.valueOf(System.currentTimeMillis() / 1000));
         headers.put("ddmc-build-version", "2.83.0");
         headers.put("ddmc-station-id", stationId);
         headers.put("ddmc-channel", "applet");
