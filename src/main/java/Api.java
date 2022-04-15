@@ -23,10 +23,9 @@ public class Api {
 
     public static final Map<String, Map<String, Object>> context = new ConcurrentHashMap<>();
 
+    private static volatile Invocable invocable;
 
-    private static Invocable invocable;
-
-    private static boolean jdk8Warning = false;
+    private static volatile boolean jdk8Warning = false;
 
     /**
      * 签名
