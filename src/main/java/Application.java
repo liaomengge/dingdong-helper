@@ -29,7 +29,15 @@ public class Application {
             sleep(DateUtil.betweenMs(currentDate, DateUtil.endOfDay(currentDate).toJdkDate()));
             return false;
         }
+        if (currentHour <= hour - 2) {
+            sleep(60 * 60 * 1000);
+            return false;
+        }
         if (currentHour < hour) {
+            sleep(60 * 1000);
+            return false;
+        }
+        if (currentMinute <= minute -2) {
             sleep(60 * 1000);
             return false;
         }
@@ -72,14 +80,11 @@ public class Application {
 
         //5点59分00秒时间触发
         while (policy == 2 && !timeTrigger(5, 59, 00)) {
-            sleep(1000);
         }
 
         //8点29分00秒时间触发
         while (policy == 3 && !timeTrigger(8, 29, 00)) {
-            sleep(1000);
         }
-
 
         //保护线程 2分钟未下单自动终止 避免对叮咚服务器造成压力 也避免封号  如果想长时间执行 请使用Sentinel哨兵模式
         new Thread(() -> {
