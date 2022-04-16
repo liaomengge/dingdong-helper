@@ -3,15 +3,15 @@
 # JAVA应用程序的名称
 APP_NAME=dingdong-helper-sentinel-1.0.0
 # jar包存放路径
-JAR_PATH="/root/${APP_NAME}"
+JAR_PATH=/root/$APP_NAME
 # jar包名称
-JAR_NAME="${APP_NAME}.jar"
+JAR_NAME=$APP_NAME.jar
 # PID 代表是PID文件
 JAR_PID=$JAR_NAME\.pid
 # 日志输出文件
 LOG_DIR=/root/log
 # 日志输出文件
-LOG_FILE="${APP_NAME}.txt"
+LOG_FILE=$APP_NAME.txt
 
 
 # 检查程序是否处于运行状态
