@@ -19,30 +19,40 @@ public class Application {
         }
     }
 
+    public static void sleep(StringBuilder stringBuilder, long millis) {
+        try {
+            stringBuilder.append(", 下次触发时间：" + DateUtil.date(System.currentTimeMillis() + millis).toString());
+            System.out.println(stringBuilder.toString());
+            Thread.sleep(millis);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
     private static boolean timeTrigger(int hour, int minute, int second) {
         int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
         int currentSecond = Calendar.getInstance().get(Calendar.SECOND);
-        System.out.println("时间触发 当前时间 " + currentHour + ":" + currentMinute + ":" + currentSecond + " 目标时间 " + hour + ":" + minute + ":" + second);
+        StringBuilder sBuilder =
+                new StringBuilder("时间触发 当前时间 " + currentHour + ":" + currentMinute + ":" + currentSecond + " 目标时间 " + hour + ":" + minute + ":" + second);
         if (currentHour > hour) {
             Date currentDate = new Date();
-            sleep(DateUtil.betweenMs(currentDate, DateUtil.endOfDay(currentDate).toJdkDate()));
+            sleep(sBuilder, DateUtil.betweenMs(currentDate, DateUtil.endOfDay(currentDate).toJdkDate()));
             return false;
         }
         if (currentHour <= hour - 2) {
-            sleep(60 * 60 * 1000);
+            sleep(sBuilder, 60 * 60 * 1000);
             return false;
         }
         if (currentHour < hour) {
-            sleep(60 * 1000);
+            sleep(sBuilder, 60 * 1000);
             return false;
         }
         if (currentMinute <= minute -2) {
-            sleep(60 * 1000);
+            sleep(sBuilder, 60 * 1000);
             return false;
         }
         if (currentMinute < minute) {
-            sleep(1000);
+            sleep(sBuilder, 1000);
             return false;
         }
         return currentHour == hour && currentMinute == minute && currentSecond >= second;
