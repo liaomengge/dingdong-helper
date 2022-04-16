@@ -48,7 +48,7 @@ start() {
     echo "$APP_NAME is already running pid is ${pid}"
   else
     # jar服务启动脚本
-    nohup java -jar $JAR_PATH/$JAR_NAME > $LOG_DIR/$LOG_FILE &
+    nohup java -jar $JAR_PATH/$JAR_NAME > $LOG_DIR/$LOG_FILE 2>&1 &
     echo $! > $JAR_PID
     echo "start $APP_NAME successed pid is $! "
     tail -100f $LOG_DIR/$LOG_FILE
