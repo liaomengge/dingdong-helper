@@ -21,7 +21,7 @@ public class Sentinel {
     private static boolean checkTime() {
         //23点之后，早上5点之前不执行捡漏计划
         int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        if (currentHour >= 23 && currentHour < 5) {
+        if (currentHour >= 23 || currentHour < 5) {
             System.out.println("下一次捡漏执行时间节点：" + DateUtil.date(System.currentTimeMillis() + 10 * 60 * 1000).toString());
             sleep(10 * 60 * 1000);
             return false;
@@ -69,7 +69,7 @@ public class Sentinel {
                 while(!checkTime()) {
                 }
 
-                System.out.println("第["+(++j)+"]次抢购。。。");
+                System.out.println("第["+(++j)+"]次捡漏抢购。。。");
 
                 Api.allCheck();
 
