@@ -19,7 +19,7 @@ public class NoticeUtil {
 
     private static final String WX_URL = String.format("http://dd.100vs.com/api/%s/send", NoticePush.WX_PUSH_TOKEN);
 
-    private static final String IOS_URL = String.format("https://api.day.app/%s", NoticePush.IOS_PUSH_TOKEN);
+    private static final String IOS_URL = String.format("https://api.day.app/%s", NoticePush.IOS_PUSH_KEY);
 
     private static final Integer TIMEOUT = 5000;
 

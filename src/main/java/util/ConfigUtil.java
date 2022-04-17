@@ -5,11 +5,23 @@ package util;
  */
 public class ConfigUtil {
 
+    /**
+     * 微信的配咋信息
+     */
     public static final class NoticePush {
+        /**
+         * 微信扫描后的Token
+         */
         public static final String WX_PUSH_TOKEN = "";
-        public static final String IOS_PUSH_TOKEN = "";
+        /**
+         * IOS中Bark的Key
+         */
+        public static final String IOS_PUSH_KEY = "";
     }
 
+    /**
+     * 抓包配咋的信息
+     */
     public static final class UserInfo {
         public static final String STATION_ID = "";
         public static final String ADDRESS_ID = "";
