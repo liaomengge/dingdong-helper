@@ -70,7 +70,7 @@ public class Application {
         int policy = 1;//默认人工模式
 
         //最小订单成交金额 举例如果设置成50 那么订单要超过50才会下单
-        double minOrderPrice = 0;
+        double minOrderPrice = 10;
 
         //基础信息执行线程数
         int baseTheadSize = 2;

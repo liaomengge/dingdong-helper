@@ -1,4 +1,6 @@
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
@@ -15,6 +17,9 @@ import java.applet.AudioClip;
 import java.io.File;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 接口封装
@@ -23,9 +28,25 @@ public class Api {
 
     public static final Map<String, Map<String, Object>> context = new ConcurrentHashMap<>();
 
-    private static volatile Invocable invocable;
+    public static AtomicInteger exceptionCount = new AtomicInteger(0);
+
+    public static volatile String random = RandomUtil.randomString(6);
+
+    private static volatile Invocable invocable = null;
 
     private static volatile boolean jdk8Warning = false;
+
+    static {
+        ThreadUtil.schedule(new ScheduledThreadPoolExecutor(1), () -> {
+            if (exceptionCount.get() >= 5) {
+                random = RandomUtil.randomString(6);
+            }
+            if (exceptionCount.get() >= 10) {
+                NoticeUtil.send(ImmutableMap.of("title", "账号已被封", "content", "账号已被封，请重新登录。。。"));
+                exceptionCount.set(0);
+            }
+        }, 10, 60, TimeUnit.SECONDS ,false);
+    }
 
     /**
      * 签名
@@ -66,7 +87,7 @@ public class Api {
     public static void play() {
         //这里还可以使用企业微信或者钉钉的提供的webhook  自己写代码 很简单 就是按对应数据格式发一个请求到企业微信或者钉钉
         try {
-            if (!NoticeUtil.send()) {
+            if (!NoticeUtil.send(ImmutableMap.of("title", "下单成功", "content", "下单成功，快去支付吧。。。"))) {
                 AudioClip audioClip = Applet.newAudioClip(new File("ding-dong.wav").toURL());
                 audioClip.loop();
                 Thread.sleep(60000);//响铃60秒
@@ -105,6 +126,7 @@ public class Api {
         Boolean success = object.getBool("success");
         if (success == null) {
             if ("405".equals(object.getStr("code"))) {
+                exceptionCount.incrementAndGet();
                 print(false, actionName + "失败:" + "出现此问题有三个可能 1.偶发，无需处理 2.一个账号一天只能下两单  3.不要长时间运行程序，目前已知有人被风控了，暂时未确认风控的因素是ip还是用户或设备相关信息，如果要测试用单次执行模式，并发只能用于6点、8点半的前一分钟，然后执行时间不能超过2分钟，如果买不到就不要再执行程序了，切忌切忌");
                 print(false, "405问题解决方案，不保证完全有效,退出App账号重新登录，尝试刷新购物车和提交订单是否正常，如果正常退出小程序重新登录后再抓包，替换UserConfig中的cookie和device_token。");
             } else {

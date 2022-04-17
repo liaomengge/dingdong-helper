@@ -2,8 +2,8 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.google.common.collect.ImmutableMap;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -15,9 +15,9 @@ public class NoticeUtil {
 
     private static final String url = String.format("http://dd.100vs.com/api/%s/send", token);
 
-    public static boolean send() {
+    public static boolean send(Map<String, Object> map) {
         try {
-            String result = HttpUtil.get(url, ImmutableMap.of("title", "下单成功", "content", "下单成功，快去支付吧。。。"), 3000);
+            String result = HttpUtil.get(url, map, 5000);
             if (StrUtil.isNotBlank(result)) {
                 JSONObject jsonObject = JSONUtil.parseObj(result);
                 if (Objects.nonNull(jsonObject)) {
