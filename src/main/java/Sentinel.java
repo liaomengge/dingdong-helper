@@ -77,7 +77,7 @@ public class Sentinel {
 
                 Map<String, Object> cartMap = null;
                 for (int i = 0; i < loopTryCount && cartMap == null && !Api.context.containsKey("noProduct"); i++) {
-                    sleep(RandomUtil.randomInt(500, 2000));
+                    sleep(RandomUtil.randomInt(400, 1600));
                     cartMap = Api.getCart(true);
                 }
                 if (cartMap == null) {
@@ -92,7 +92,7 @@ public class Sentinel {
 
                 Map<String, Object> multiReserveTimeMap = null;
                 for (int i = 0; i < loopTryCount && multiReserveTimeMap == null && !Api.context.containsKey("noReserve"); i++) {
-                    sleep(RandomUtil.randomInt(500, 2000));
+                    sleep(RandomUtil.randomInt(400, 1600));
                     multiReserveTimeMap = Api.getMultiReserveTime(UserConfig.addressId, cartMap);
                 }
                 if (multiReserveTimeMap == null) {
@@ -102,7 +102,7 @@ public class Sentinel {
 
                 Map<String, Object> checkOrderMap = null;
                 for (int i = 0; i < loopTryCount && checkOrderMap == null; i++) {
-                    sleep(RandomUtil.randomInt(500, 2000));
+                    sleep(RandomUtil.randomInt(400, 1600));
                     checkOrderMap = Api.getCheckOrder(UserConfig.addressId, cartMap, multiReserveTimeMap);
                 }
                 if (checkOrderMap == null) {
@@ -110,7 +110,7 @@ public class Sentinel {
                 }
 
                 for (int i = 0; i < loopTryCount; i++) {
-                    sleep(RandomUtil.randomInt(500, 2000));
+                    sleep(RandomUtil.randomInt(400, 1600));
                     if (Api.addNewOrder(UserConfig.addressId, cartMap, multiReserveTimeMap, checkOrderMap)) {
                         System.out.println("铃声持续1分钟，终止程序即可，如果还需要下单再继续运行程序");
                         Api.play();
