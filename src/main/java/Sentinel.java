@@ -1,9 +1,7 @@
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 
-import javax.xml.stream.FactoryConfigurationError;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -39,12 +37,12 @@ public class Sentinel {
         double minOrderPrice = 10;
 
         //执行任务请求间隔时间最小值
-        int sleepMillisMin = 30000;
+        int sleepMillisMin = 20000;
         //执行任务请求间隔时间最大值
-        int sleepMillisMax = 60000;
+        int sleepMillisMax = 40000;
 
         //单轮轮询时请求异常（叮咚服务器高峰期限流策略）尝试次数
-        int loopTryCount = 6;
+        int loopTryCount = 8;
 
         //60次以后长时间等待10分钟左右
         int longWaitCount = 0;
