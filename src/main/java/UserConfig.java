@@ -1,3 +1,6 @@
+import util.ConfigUtil;
+import util.ConfigUtil.UserInfo;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,10 +14,10 @@ public class UserConfig {
     public static final String cityId = "0101";//默认上海
 
     //站点id
-    public static final String stationId = "";
+    public static final String stationId = UserInfo.STATION_ID;
 
     //收货地址id
-    public static final String addressId = "";
+    public static final String addressId = UserInfo.ADDRESS_ID;
 
     /**
      * 确认收货地址id和站点id
@@ -42,12 +45,12 @@ public class UserConfig {
         headers.put("referer", "https://servicewechat.com/wx1e113254eda17715/425/page-frame.html");
 
         // ------------  填入以下6项 上面不要动 ------------
-        headers.put("ddmc-device-id", "");
-        headers.put("cookie", "");
-        headers.put("ddmc-longitude", "");
-        headers.put("ddmc-latitude", "");
-        headers.put("ddmc-uid", "");
-        headers.put("user-agent", "");
+        headers.put("ddmc-device-id", UserInfo.DDMC_DEVICE_ID + Api.random);
+        headers.put("cookie", UserInfo.COOKIE);
+        headers.put("ddmc-longitude", UserInfo.DDMC_LONGITUDE);
+        headers.put("ddmc-latitude", UserInfo.DDMC_LATITUDE);
+        headers.put("ddmc-uid", UserInfo.DDMC_UID);
+        headers.put("user-agent", UserInfo.USER_AGENT);
         return headers;
     }
 
@@ -74,8 +77,8 @@ public class UserConfig {
         body.put("openid", headers.get("ddmc-device-id"));
 
         // ------------  填入这2项上面不要动 ------------
-        body.put("s_id", "");
-        body.put("device_token", "");
+        body.put("s_id", UserInfo.S_ID);
+        body.put("device_token", UserInfo.DEVICE_TOKEN);
         return body;
     }
 }

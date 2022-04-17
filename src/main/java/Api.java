@@ -7,6 +7,7 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.ImmutableMap;
+import util.NoticeUtil;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -30,6 +31,8 @@ public class Api {
 
     public static AtomicInteger exceptionCount = new AtomicInteger(0);
 
+    public static AtomicInteger resetCount = new AtomicInteger(0);
+
     public static volatile String random = RandomUtil.randomString(6);
 
     private static volatile Invocable invocable = null;
@@ -42,8 +45,13 @@ public class Api {
                 random = RandomUtil.randomString(6);
             }
             if (exceptionCount.get() >= 10) {
-                NoticeUtil.send(ImmutableMap.of("title", "账号已被封", "content", "账号已被封，请重新登录。。。"));
+                if (resetCount.get() <= 3) {
+                    NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("账号已被封").content("账号已被封，请重新登录。。。").build());
+                } else {
+                    context.put("end", new HashMap<>());
+                }
                 exceptionCount.set(0);
+                resetCount.incrementAndGet();
             }
         }, 10, 60, TimeUnit.SECONDS ,false);
     }
@@ -87,7 +95,7 @@ public class Api {
     public static void play() {
         //这里还可以使用企业微信或者钉钉的提供的webhook  自己写代码 很简单 就是按对应数据格式发一个请求到企业微信或者钉钉
         try {
-            if (!NoticeUtil.send(ImmutableMap.of("title", "下单成功", "content", "下单成功，快去支付吧。。。"))) {
+            if (!NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("下单成功").content("下单成功，快去支付吧。。。").build())) {
                 AudioClip audioClip = Applet.newAudioClip(new File("ding-dong.wav").toURL());
                 audioClip.loop();
                 Thread.sleep(60000);//响铃60秒

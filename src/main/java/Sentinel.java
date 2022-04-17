@@ -1,5 +1,6 @@
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
+import util.NoticeUtil;
 
 import java.util.Calendar;
 import java.util.Map;
@@ -19,14 +20,13 @@ public class Sentinel {
     private static boolean checkTime() {
         //23点之后，早上5点之前不执行捡漏计划
         int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        if (currentHour >= 23 || currentHour < 5) {
+        if (currentHour >= 22 || currentHour < 5) {
             System.out.println("下一次捡漏执行时间节点：" + DateUtil.date(System.currentTimeMillis() + 10 * 60 * 1000).toString());
             sleep(10 * 60 * 1000);
             return false;
         }
         return true;
     }
-
 
     public static void main(String[] args) {
         System.out.println("此模式模拟真人执行操作间隔不并发，不支持6点和8点30高峰期下单，如果需要在6点和8点30下单，请使用Application，设置policy = 2（6点）或 policy = 3(8点30)");
@@ -121,7 +121,8 @@ public class Sentinel {
                 e.printStackTrace();
             }
         }
-        System.out.println("--------------程序已退出--------------");
+        System.out.println("--------------捡漏程序已退出--------------");
+        NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("捡漏程序已退出").content("捡漏程序已退出，请重新启动。。。").build());
     }
 
 }

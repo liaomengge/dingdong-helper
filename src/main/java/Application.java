@@ -1,5 +1,6 @@
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
+import util.NoticeUtil;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -10,7 +11,6 @@ import java.util.Map;
  * 抢菜主程序 只能用于高峰期 并且运行两分钟以内 如未抢到不要再继续执行
  */
 public class Application {
-
 
     public static void sleep(long millis) {
         try {
@@ -101,6 +101,7 @@ public class Application {
                 Api.context.put("end", new HashMap<>());
                 sleep(3000);
                 System.err.println("未成功下单，执行2分钟自动停止");
+                NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("未成功下单").content("未成功下单，高峰下单程序执行2分钟自动停止。。。").build());
             }
         }).start();
 
