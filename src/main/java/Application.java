@@ -76,13 +76,13 @@ public class Application {
         int baseTheadSize = 2;
 
         //提交订单执行线程数
-        int submitOrderTheadSize = 4;
+        int submitOrderTheadSize = 5;
 
         //取随机数
         //请求间隔时间最小值
-        int sleepMillisMin = 300;
+        int sleepMillisMin = 200;
         //请求间隔时间最大值
-        int sleepMillisMax = 500;
+        int sleepMillisMax = 400;
 
         //5点59分00秒时间触发
         while (policy == 2 && !timeTrigger(5, 59, 00)) {

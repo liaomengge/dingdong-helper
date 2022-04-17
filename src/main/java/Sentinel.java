@@ -44,7 +44,7 @@ public class Sentinel {
         int sleepMillisMax = 60000;
 
         //单轮轮询时请求异常（叮咚服务器高峰期限流策略）尝试次数
-        int loopTryCount = 5;
+        int loopTryCount = 6;
 
         //60次以后长时间等待10分钟左右
         int longWaitCount = 0;
@@ -79,7 +79,7 @@ public class Sentinel {
 
                 Map<String, Object> cartMap = null;
                 for (int i = 0; i < loopTryCount && cartMap == null && !Api.context.containsKey("noProduct"); i++) {
-                    sleep(RandomUtil.randomInt(500, 1500));
+                    sleep(RandomUtil.randomInt(500, 2000));
                     cartMap = Api.getCart(true);
                 }
                 if (cartMap == null) {
@@ -94,7 +94,7 @@ public class Sentinel {
 
                 Map<String, Object> multiReserveTimeMap = null;
                 for (int i = 0; i < loopTryCount && multiReserveTimeMap == null && !Api.context.containsKey("noReserve"); i++) {
-                    sleep(RandomUtil.randomInt(500, 1500));
+                    sleep(RandomUtil.randomInt(500, 2000));
                     multiReserveTimeMap = Api.getMultiReserveTime(UserConfig.addressId, cartMap);
                 }
                 if (multiReserveTimeMap == null) {
@@ -104,7 +104,7 @@ public class Sentinel {
 
                 Map<String, Object> checkOrderMap = null;
                 for (int i = 0; i < loopTryCount && checkOrderMap == null; i++) {
-                    sleep(RandomUtil.randomInt(500, 1500));
+                    sleep(RandomUtil.randomInt(500, 2000));
                     checkOrderMap = Api.getCheckOrder(UserConfig.addressId, cartMap, multiReserveTimeMap);
                 }
                 if (checkOrderMap == null) {
@@ -112,7 +112,7 @@ public class Sentinel {
                 }
 
                 for (int i = 0; i < loopTryCount; i++) {
-                    sleep(RandomUtil.randomInt(500, 1500));
+                    sleep(RandomUtil.randomInt(500, 2000));
                     if (Api.addNewOrder(UserConfig.addressId, cartMap, multiReserveTimeMap, checkOrderMap)) {
                         System.out.println("铃声持续1分钟，终止程序即可，如果还需要下单再继续运行程序");
                         Api.play();
