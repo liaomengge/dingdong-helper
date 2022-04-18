@@ -145,9 +145,10 @@ public class Api {
         if (success) {
             return true;
         }
-        if ("您的访问已过期".equals(object.getStr("message"))) {
+        if ("您的访问已过期,请重新登录".equals(object.getStr("msg"))) {
             context.put("end", new HashMap<>());
-            System.err.println("用户信息失效，请确保UserConfig参数准确，并且微信上的叮咚小程序不能退出登录");
+            System.err.println("用户信息失效，请重新登录，并且微信上的叮咚小程序不能退出登录");
+            NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("账号登录过期").content("账号登录过期，请重新登录。。。").build());
             return false;
         }
         String msg = null;
