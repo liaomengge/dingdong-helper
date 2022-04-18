@@ -34,6 +34,8 @@ public class Api {
 
     public static AtomicInteger resetCount = new AtomicInteger(0);
 
+    public static AtomicInteger invalidCount = new AtomicInteger(0);
+
     public static volatile String random = RandomUtil.randomString(6);
 
     private static volatile Invocable invocable = null;
@@ -46,13 +48,12 @@ public class Api {
                 random = RandomUtil.randomString(6);
             }
             if (exceptionCount.get() >= 10) {
-                if (resetCount.get() < 3) {
+                if (resetCount.getAndIncrement() < 3) {
                     NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("账号已被封").content("账号已被封，请重新登录。。。").build());
                 } else {
                     context.put("end", new HashMap<>());
                 }
                 exceptionCount.set(0);
-                resetCount.incrementAndGet();
             }
         }, 10, 60, TimeUnit.SECONDS ,false);
     }
@@ -149,7 +150,9 @@ public class Api {
         if ("您的访问已过期,请重新登录".equals(object.getStr("msg"))) {
             context.put("end", new HashMap<>());
             System.err.println("用户信息失效，请重新登录，并且微信上的叮咚小程序不能退出登录");
-            NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("账号登录过期").content("账号登录过期，请重新登录。。。").build());
+            if (invalidCount.getAndIncrement() < 3) {
+                NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("账号登录过期").content("账号登录过期，请重新登录。。。").build());
+            }
             return false;
         }
         String msg = null;
