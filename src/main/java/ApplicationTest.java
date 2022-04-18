@@ -17,6 +17,9 @@ public class ApplicationTest {
         if (cartMap == null) {
             return;
         }
+        if (!Api.getMultiReserveTimePre()) {
+            return;
+        }
         Map<String, Object> multiReserveTimeMap = Api.getMultiReserveTime(UserConfig.addressId, cartMap);
         if (multiReserveTimeMap == null) {
             return;

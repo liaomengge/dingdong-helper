@@ -37,7 +37,7 @@ public class Sentinel {
         double minOrderPrice = 10;
 
         //执行任务请求间隔时间最小值
-        int sleepMillisMin = 20000;
+        int sleepMillisMin = 10000;
         //执行任务请求间隔时间最大值
         int sleepMillisMax = 40000;
 
@@ -71,7 +71,7 @@ public class Sentinel {
                 while(!checkTime()) {
                 }
 
-                System.out.println("第["+(++j)+"]次捡漏抢购。。。");
+                System.out.println(DateUtil.now() + " 第["+(++j)+"]次捡漏抢购。。。");
 
                 Api.allCheck();
 
@@ -93,6 +93,9 @@ public class Sentinel {
                 Map<String, Object> multiReserveTimeMap = null;
                 for (int i = 0; i < loopTryCount && multiReserveTimeMap == null && !Api.context.containsKey("noReserve"); i++) {
                     sleep(RandomUtil.randomInt(400, 1600));
+                    if (!Api.getMultiReserveTimePre()) {
+                        continue;
+                    }
                     multiReserveTimeMap = Api.getMultiReserveTime(UserConfig.addressId, cartMap);
                 }
                 if (multiReserveTimeMap == null) {
@@ -102,20 +105,23 @@ public class Sentinel {
 
                 Map<String, Object> checkOrderMap = null;
                 for (int i = 0; i < loopTryCount && checkOrderMap == null; i++) {
-                    sleep(RandomUtil.randomInt(400, 1600));
                     checkOrderMap = Api.getCheckOrder(UserConfig.addressId, cartMap, multiReserveTimeMap);
+                    if(checkOrderMap != null){
+                        break;
+                    }
+                    sleep(RandomUtil.randomInt(400, 1600));
                 }
                 if (checkOrderMap == null) {
                     continue;
                 }
 
                 for (int i = 0; i < loopTryCount; i++) {
-                    sleep(RandomUtil.randomInt(400, 1600));
                     if (Api.addNewOrder(UserConfig.addressId, cartMap, multiReserveTimeMap, checkOrderMap)) {
                         System.out.println("铃声持续1分钟，终止程序即可，如果还需要下单再继续运行程序");
                         Api.play();
                         break;
                     }
+                    sleep(RandomUtil.randomInt(400, 1600));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

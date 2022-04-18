@@ -137,6 +137,9 @@ public class Application {
                     if (Api.context.get("cartMap") == null) {
                         continue;
                     }
+                    if (!Api.getMultiReserveTimePre()) {
+                        continue;
+                    }
                     Map<String, Object> multiReserveTimeMap = Api.getMultiReserveTime(UserConfig.addressId, Api.context.get("cartMap"));
                     if (multiReserveTimeMap != null) {
                         Api.context.put("multiReserveTimeMap", multiReserveTimeMap);

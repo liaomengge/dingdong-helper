@@ -1,5 +1,6 @@
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
@@ -45,7 +46,7 @@ public class Api {
                 random = RandomUtil.randomString(6);
             }
             if (exceptionCount.get() >= 10) {
-                if (resetCount.get() <= 3) {
+                if (resetCount.get() < 3) {
                     NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("账号已被封").content("账号已被封，请重新登录。。。").build());
                 } else {
                     context.put("end", new HashMap<>());
@@ -98,7 +99,7 @@ public class Api {
             if (!NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("下单成功").content("下单成功，快去支付吧。。。").build())) {
                 AudioClip audioClip = Applet.newAudioClip(new File("ding-dong.wav").toURL());
                 audioClip.loop();
-                Thread.sleep(60000);//响铃60秒
+                Thread.sleep(10000);//响铃10秒
             }
         } catch ( Exception e) {
             e.printStackTrace();
@@ -326,6 +327,30 @@ public class Api {
         return null;
     }
 
+    /**
+     * 运力检查
+     *
+     * @return
+     */
+    public static boolean getMultiReserveTimePre(){
+        try {
+            HttpRequest httpRequest = HttpUtil.createGet("https://maicai.api.ddxq.mobi/orderFlashSale/check");
+            Map<String, String> headers = UserConfig.getHeaders();
+            httpRequest.addHeaders(headers);
+            Map<String, Object> request = UserConfig.getBody(headers);
+            httpRequest.form(sign(request));
+            String body = httpRequest.execute().body();
+            JSONObject object = JSONUtil.parseObj(body);
+            if (Objects.nonNull(object)) {
+                boolean result = BooleanUtil.isTrue(object.getBool("success"));
+                System.out.println("运力检查结果:" + result + " msg:" + object.getStr("msg"));
+                return result;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     /**
      * 获取配送信息
