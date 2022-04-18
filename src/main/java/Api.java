@@ -47,7 +47,7 @@ public class Api {
             if (exceptionCount.get() >= 5) {
                 random = RandomUtil.randomString(6);
             }
-            if (exceptionCount.get() >= 10) {
+            if (exceptionCount.get() >= 30) {
                 if (resetCount.getAndIncrement() < 3) {
                     NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("账号已被封").content("账号已被封，请重新登录。。。").build());
                 } else {
