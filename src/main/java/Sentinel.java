@@ -33,8 +33,8 @@ public class Sentinel {
         System.out.println("3秒后执行，请确认上述内容");
         sleep(3000);
         
-        //最小订单成交金额 举例如果设置成50 那么订单要超过50才会下单
-        double minOrderPrice = 10;
+        //最小订单成交金额 举例如果设置成20 那么订单要超过20才会下单
+        double minOrderPrice = 20;
 
         //执行任务请求间隔时间最小值
         int sleepMillisMin = 10000;
