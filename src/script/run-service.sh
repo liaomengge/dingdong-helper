@@ -51,7 +51,7 @@ start() {
     nohup java -jar $JAR_PATH/$JAR_NAME > $LOG_DIR/$LOG_FILE 2>&1 &
     echo $! > $JAR_PID
     echo "start $APP_NAME successed pid is $! "
-    tail -100f $LOG_DIR/$LOG_FILE
+    head -n 1 $LOG_DIR/$LOG_FILE
    fi
   }
 
