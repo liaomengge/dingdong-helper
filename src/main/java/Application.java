@@ -101,6 +101,7 @@ public class Application {
                 Api.context.put("end", new HashMap<>());
                 sleep(3000);
                 System.err.println("未成功下单，执行2分钟自动停止");
+                System.out.println("--------------高峰期抢单程序已终止抢单--------------");
                 NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("未成功下单").content("未成功下单，高峰下单程序执行2分钟自动停止。。。").build());
             }
         }).start();

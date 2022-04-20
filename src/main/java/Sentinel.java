@@ -127,7 +127,7 @@ public class Sentinel {
                 e.printStackTrace();
             }
         }
-        System.out.println("--------------捡漏程序已退出--------------");
+        System.out.println("--------------捡漏程序已终止捡漏--------------");
         NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("捡漏程序已退出").content("捡漏程序已退出，请重新启动。。。").build());
     }
 
