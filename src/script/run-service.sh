@@ -2,9 +2,9 @@
 
 # JAVA应用程序的名称
 APP_NAME=dingdong-helper-sentinel-1.0.0
-# jar包存放路径
+# Jar包存放路径
 JAR_PATH=/root/$APP_NAME
-# jar包名称
+# Jar包名称
 JAR_NAME=$APP_NAME.jar
 # PID 代表是PID文件
 JAR_PID=$JAR_NAME\.pid
