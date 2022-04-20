@@ -1,6 +1,7 @@
 #!/bin/sh
 
 . package.properties
+
 # 服务器上的用户名
 USER=$user
 # 服务器上的密码
