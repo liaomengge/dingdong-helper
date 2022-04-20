@@ -1,14 +1,15 @@
 #!/bin/sh
 
-#服务器上的用户名
-USER=""
-#服务器上的密码
-PASSWORD=""
-#服务器实例
-IP=""
-#上传到服务器指定的目录
-DIR=""
-#上传的tar文件
+. package.properties
+# 服务器上的用户名
+USER=$user
+# 服务器上的密码
+PASSWORD=$password
+# 服务器实例
+IP=$ip
+# 上传到服务器指定的目录
+DIR=$dir
+# 上传的tar文件
 TAR_FILE=dingdong-helper-sentinel-1.0.0.tar.gz
 
 #打包项目
