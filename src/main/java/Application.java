@@ -69,8 +69,8 @@ public class Application {
         //policy设置3 时间触发 运行程序后等待早上8点29分30秒开始
         int policy = 1;//默认人工模式
 
-        //最小订单成交金额 举例如果设置成50 那么订单要超过20才会下单
-        double minOrderPrice = 20;
+        //最小订单成交金额 举例如果设置成30 那么订单要超过30才会下单
+        double minOrderPrice = 30;
 
         //基础信息执行线程数
         int baseTheadSize = 2;
