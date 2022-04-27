@@ -80,7 +80,7 @@ public class Application {
 
         //取随机数
         //请求间隔时间最小值
-        int sleepMillisMin = 200;
+        int sleepMillisMin = 100;
         //请求间隔时间最大值
         int sleepMillisMax = 400;
 

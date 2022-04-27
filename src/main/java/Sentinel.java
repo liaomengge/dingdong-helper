@@ -61,10 +61,6 @@ public class Sentinel {
                         sleep(RandomUtil.randomInt(300000, 500000));
                     } else {
                         sleep(RandomUtil.randomInt(sleepMillisMin, sleepMillisMax));
-                        if (Api.exceptionCount.get() > 10) {
-                            System.out.println("405异常数超过10次，休息5分钟左右再继续");
-                            sleep(RandomUtil.randomInt(300000, 500000));
-                        }
                     }
                 }
 
