@@ -331,31 +331,6 @@ public class Api {
     }
 
     /**
-     * 运力检查
-     *
-     * @return
-     */
-    public static boolean getMultiReserveTimePre(){
-        try {
-            HttpRequest httpRequest = HttpUtil.createGet("https://maicai.api.ddxq.mobi/orderFlashSale/check");
-            Map<String, String> headers = UserConfig.getHeaders();
-            httpRequest.addHeaders(headers);
-            Map<String, Object> request = UserConfig.getBody(headers);
-            httpRequest.form(sign(request));
-            String body = httpRequest.execute().body();
-            JSONObject object = JSONUtil.parseObj(body);
-            if (Objects.nonNull(object)) {
-                boolean result = BooleanUtil.isTrue(object.getBool("success"));
-                System.out.println("运力检查结果:" + result + " msg:" + object.getStr("msg"));
-                return result;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
      * 获取配送信息
      *
      * @param addressId 配送地址id

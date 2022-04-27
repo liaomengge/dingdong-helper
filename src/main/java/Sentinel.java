@@ -34,7 +34,7 @@ public class Sentinel {
         sleep(3000);
         
         //最小订单成交金额 举例如果设置成30 那么订单要超过30才会下单
-        double minOrderPrice = 30;
+        double minOrderPrice = 20;
 
         //执行任务请求间隔时间最小值
         int sleepMillisMin = 10000;
@@ -89,9 +89,6 @@ public class Sentinel {
                 Map<String, Object> multiReserveTimeMap = null;
                 for (int i = 0; i < loopTryCount && multiReserveTimeMap == null && !Api.context.containsKey("noReserve"); i++) {
                     sleep(RandomUtil.randomInt(400, 1600));
-                    if (!Api.getMultiReserveTimePre()) {
-                        continue;
-                    }
                     multiReserveTimeMap = Api.getMultiReserveTime(UserConfig.addressId, cartMap);
                 }
                 if (multiReserveTimeMap == null) {

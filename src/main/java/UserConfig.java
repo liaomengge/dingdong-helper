@@ -34,15 +34,14 @@ public class UserConfig {
         Map<String, String> headers = new HashMap<>();
         headers.put("ddmc-city-number", cityId);
         headers.put("ddmc-time", String.valueOf(System.currentTimeMillis() / 1000));
-        headers.put("ddmc-build-version", "2.83.0");
+        headers.put("ddmc-build-version", "0");
         headers.put("ddmc-station-id", stationId);
-        headers.put("ddmc-channel", "applet");
-        headers.put("ddmc-os-version", "[object Undefined]");
-        headers.put("ddmc-app-client-id", "4");
+        headers.put("ddmc-channel", "");
+        headers.put("ddmc-app-client-id", "3");
         headers.put("ddmc-ip", "");
-        headers.put("ddmc-api-version", "9.50.0");
-        headers.put("accept-encoding", "gzip,compress,br,deflate");
-        headers.put("referer", "https://servicewechat.com/wx1e113254eda17715/425/page-frame.html");
+        headers.put("ddmc-api-version", "9.7.3");
+        headers.put("accept-encoding", "gzip, deflate, br");
+        headers.put("referer", "https://servicewechat.com/wx1e113254eda17715/437/page-frame.html");
 
         // ------------  填入以下6项 上面不要动 ------------
         headers.put("ddmc-device-id", UserInfo.DDMC_DEVICE_ID + Api.random);
@@ -66,13 +65,14 @@ public class UserConfig {
         body.put("latitude ", headers.get("ddmc-latitude"));
         body.put("station_id", headers.get("ddmc-station-id"));
         body.put("city_number", headers.get("ddmc-city-number"));
-        body.put("api_version", headers.get("ddmc-api-version"));
-        body.put("app_version ", headers.get("ddmc-build-version"));
+        body.put("api_version", "9.50.2");
         body.put("applet_source", "");
         body.put("channel", "applet");
         body.put("app_client_id", "4");
+        body.put("app_version ", "2.85.4");
         body.put("sharer_uid", "");
         body.put("h5_source", "");
+        body.put("source_type", "5");
         body.put("time", headers.get("ddmc-time"));
         body.put("openid", headers.get("ddmc-device-id"));
 

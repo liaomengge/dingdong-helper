@@ -70,7 +70,7 @@ public class Application {
         int policy = 1;//默认人工模式
 
         //最小订单成交金额 举例如果设置成30 那么订单要超过30才会下单
-        double minOrderPrice = 30;
+        double minOrderPrice = 20;
 
         //基础信息执行线程数
         int baseTheadSize = 2;
@@ -82,7 +82,7 @@ public class Application {
         //请求间隔时间最小值
         int sleepMillisMin = 100;
         //请求间隔时间最大值
-        int sleepMillisMax = 400;
+        int sleepMillisMax = 200;
 
         //5点59分00秒时间触发
         while (policy == 2 && !timeTrigger(5, 59, 00)) {
@@ -136,9 +136,6 @@ public class Application {
                 while (!Api.context.containsKey("end")) {
                     sleep(RandomUtil.randomInt(sleepMillisMin, sleepMillisMax));
                     if (Api.context.get("cartMap") == null) {
-                        continue;
-                    }
-                    if (!Api.getMultiReserveTimePre()) {
                         continue;
                     }
                     Map<String, Object> multiReserveTimeMap = Api.getMultiReserveTime(UserConfig.addressId, Api.context.get("cartMap"));
