@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # JAVA应用程序的名称
-APP_NAME=dingdong-helper-application-8-1.0.0
+APP_NAME=dingdong-helper-sentinel-1.0.0
 # Jar包存放路径
 JAR_PATH=/root/$APP_NAME
 # Jar包名称
