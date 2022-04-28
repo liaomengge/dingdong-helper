@@ -34,12 +34,14 @@ public class UserConfig {
         Map<String, String> headers = new HashMap<>();
         headers.put("ddmc-city-number", cityId);
         headers.put("ddmc-time", String.valueOf(System.currentTimeMillis() / 1000));
-        headers.put("ddmc-build-version", "0");
+        headers.put("ddmc-build-version", "2.74.2");
         headers.put("ddmc-station-id", stationId);
-        headers.put("ddmc-channel", "");
-        headers.put("ddmc-app-client-id", "3");
+        headers.put("ddmc-channel", "applet");
+        headers.put("ddmc-os-version", "[object Undefined]");
+        headers.put("ddmc-app-client-id", "4");
         headers.put("ddmc-ip", "");
-        headers.put("ddmc-api-version", "9.7.3");
+        headers.put("ddmc-api-version", "9.44.0");
+        headers.put("ddmc-sdkversion", "2.13.2");
         headers.put("accept-encoding", "gzip, deflate, br");
         headers.put("referer", "https://servicewechat.com/wx1e113254eda17715/437/page-frame.html");
 
