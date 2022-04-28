@@ -11,7 +11,7 @@ IP=$ip
 # 上传到服务器指定的目录
 DIR=$dir
 # 上传的tar文件
-TAR_FILE=dingdong-helper-sentinel-1.0.0.tar.gz
+TAR_FILE=dingdong-helper-application-8-1.0.0.tar.gz
 
 #打包项目
 mvn clean package -DskipTests
