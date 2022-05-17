@@ -47,9 +47,9 @@ public class Api {
             if (exceptionCount.get() >= 5) {
                 random = RandomUtil.randomString(6);
             }
-            if (exceptionCount.get() >= 30) {
+            if (exceptionCount.get() >= 60) {
                 if (resetCount.getAndIncrement() < 3) {
-                    NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("账号已被封").content("账号已被封，请重新登录。。。").build());
+                    NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("访问405过多").content("访问405过多，请重新启动。。。").build());
                 } else {
                     context.put("end", new HashMap<>());
                 }
