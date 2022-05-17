@@ -47,7 +47,7 @@ public class Api {
             if (exceptionCount.get() >= 5) {
                 random = RandomUtil.randomString(6);
             }
-            if (exceptionCount.get() >= 60) {
+            if (exceptionCount.get() >= 200) {
                 if (resetCount.getAndIncrement() < 3) {
                     NoticeUtil.send(NoticeUtil.NoticeInfo.builder().title("访问405过多").content("访问405过多，请重新启动。。。").build());
                 } else {
